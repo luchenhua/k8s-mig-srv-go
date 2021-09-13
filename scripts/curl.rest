@@ -1,0 +1,52 @@
+@hostname = localhost
+@port = 9991
+@host = {{hostname}}:{{port}}
+@basePath = /srv-go
+@baseURL = {{host}}{{basePath}}
+@contentType = application/json;charset=utf-8
+
+### test alive
+GET http://{{baseURL}}/ping
+Content-Type: {{contentType}}
+
+###
+POST http://{{baseURL}}/users
+Content-Type: {{contentType}}
+
+{
+    "first_name": "Alex",
+    "last_name": "Lu",
+    "gender": "FEMALE",
+    "mobile": "18521560000",
+    "email": "luchenhua@decathlon.net",
+    "opt_in": true
+}
+
+###
+@id = 1
+GET http://{{baseURL}}/users/{{id}}
+
+###
+@lname = Lu
+GET http://{{baseURL}}/users?last_name={{lname}}
+
+###
+PUT http://{{baseURL}}/users/{{id}}
+Content-Type: {{contentType}}
+
+{
+    "first_name": "Alex",
+    "last_name": "Lu",
+    "gender": "FEMALE",
+    "mobile": "18521564856",
+    "email": "alex.lu@decathlon.com",
+    "opt_in": false
+}
+
+###
+@id = 1
+GET http://{{baseURL}}/users/{{id}}
+
+###
+@lname = Lu
+GET http://{{baseURL}}/users?last_name={{lname}}

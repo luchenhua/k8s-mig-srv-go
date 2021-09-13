@@ -1,0 +1,17 @@
+version: "3"
+
+services:
+  k8s-mig-srv-go:
+    image: k8s-mig/k8s-mig-srv-go:latest
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      - GIN_MODE=debug
+    ports:
+      - "9991:3000"
+
+networks:
+  default:
+    external: true
+    name: msghub-backend
