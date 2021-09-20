@@ -1,12 +1,16 @@
 @hostname = localhost
 @port = 9991
 @host = {{hostname}}:{{port}}
-@basePath = /srv-go
+@basePath = /srv/go
 @baseURL = {{host}}{{basePath}}
 @contentType = application/json;charset=utf-8
 
 ### test alive
 GET http://{{baseURL}}/ping
+Content-Type: {{contentType}}
+
+###
+GET  http://{{baseURL}}/users
 Content-Type: {{contentType}}
 
 ###
@@ -48,5 +52,8 @@ Content-Type: {{contentType}}
 GET http://{{baseURL}}/users/{{id}}
 
 ###
-@lname = Lu
-GET http://{{baseURL}}/users?last_name={{lname}}
+@lname = Wilson
+@fname = Elijah
+@gender = FEMALE
+@mobile = 82535687759
+GET http://{{baseURL}}/users?first_name={{fname}}&last_name={{lname}}&gender={{gender}}&mobile={{mobile}}
