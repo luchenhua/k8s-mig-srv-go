@@ -8,6 +8,16 @@ services:
       dockerfile: Dockerfile
     environment:
       - GIN_MODE=debug
+      - DB_OLD_HOST=k8s-mig-db-old
+      - DB_OLD_PORT=5432
+      - DB_OLD_NAME=msghub
+      - DB_OLD_USER=test001
+      - DB_OLD_PASSWORD=test001
+      - DB_NEW_HOST=k8s-mig-db-new
+      - DB_NEW_PORT=5432
+      - DB_NEW_NAME=msghub
+      - DB_NEW_USER=test001
+      - DB_NEW_PASSWORD=test001
     ports:
       - "9991:3000"
 

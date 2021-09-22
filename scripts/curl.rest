@@ -27,12 +27,7 @@ Content-Type: {{contentType}}
 }
 
 ###
-@id = 1
-GET http://{{baseURL}}/users/{{id}}
-
-###
-@lname = Lu
-GET http://{{baseURL}}/users?last_name={{lname}}
+GET http://{{baseURL}}/users/1
 
 ###
 PUT http://{{baseURL}}/users/{{id}}
@@ -41,19 +36,17 @@ Content-Type: {{contentType}}
 {
     "first_name": "Alex",
     "last_name": "Lu",
-    "gender": "FEMALE",
+    "gender": "MALE",
     "mobile": "18521564856",
     "email": "alex.lu@decathlon.com",
     "opt_in": false
 }
 
 ###
-@id = 1
+@id = 1000001
 GET http://{{baseURL}}/users/{{id}}
 
 ###
-@lname = Wilson
-@fname = Elijah
-@gender = FEMALE
-@mobile = 82535687759
-GET http://{{baseURL}}/users?first_name={{fname}}&last_name={{lname}}&gender={{gender}}&mobile={{mobile}}
+@lname = Lu
+@fname = Alex
+GET http://{{baseURL}}/users?first_name={{fname}}&last_name={{lname}}

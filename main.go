@@ -4,20 +4,21 @@ import (
 	"k8s-mig-srv-go/user"
 	"net/http"
 	"strconv"
+	"strings"
 	"time"
 
 	"github.com/gin-gonic/gin"
+	"github.com/spf13/viper"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 )
 
+var db *gorm.DB
+
 func main() {
-	dsn := "host=k8s-mig-db-old user=test001 password=test001 dbname=msghub port=5432 sslmode=disable"
-	db, _ := gorm.Open(postgres.Open(dsn), &gorm.Config{})
-	sqlDB, _ := db.DB()
-	sqlDB.SetMaxIdleConns(10)
-	sqlDB.SetMaxOpenConns(100)
-	sqlDB.SetConnMaxLifetime(time.Hour)
+	viper.AutomaticEnv()
+
+	prepareDBConnection()
 
 	router := gin.Default()
 	v0 := router.Group("/srv/go")
@@ -120,4 +121,26 @@ func main() {
 	}
 
 	router.Run(":3000")
+}
+
+func prepareDBConnection() {
+	var builder strings.Builder
+
+	builder.WriteString("host=")
+	builder.WriteString(viper.GetString("DB_OLD_HOST"))
+	builder.WriteString(" user=")
+	builder.WriteString(viper.GetString("DB_OLD_USER"))
+	builder.WriteString(" password=")
+	builder.WriteString(viper.GetString("DB_OLD_PASSWORD"))
+	builder.WriteString(" dbname=")
+	builder.WriteString(viper.GetString("DB_OLD_NAME"))
+	builder.WriteString(" port=")
+	builder.WriteString(viper.GetString("DB_OLD_PORT"))
+	builder.WriteString(" sslmode=disable")
+
+	db, _ = gorm.Open(postgres.Open(builder.String()), &gorm.Config{})
+	sqlDB, _ := db.DB()
+	sqlDB.SetMaxIdleConns(10)
+	sqlDB.SetMaxOpenConns(100)
+	sqlDB.SetConnMaxLifetime(time.Hour)
 }
